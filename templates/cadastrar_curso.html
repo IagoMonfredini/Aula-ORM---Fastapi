@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Cursos Futurista Dark</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIÁVEIS DE CORES E FONTES (TEMA VERDE ESCURO) --- */
+        :root {
+            --bg-dark-green: #06170e; /* Fundo verde super escuro, quase preto */
+            --form-glass: rgba(13, 38, 22, 0.7); /* Vidro esverdeado escuro */
+            --text-light: #e8f5e9; /* Branco esverdeado para textos */
+            --text-muted: #a5d6a7; /* Verde claro para rótulos */
+            --neon-green: #00e676; /* Verde elétrico vibrante para os brilhos */
+            --border-green: #1b5e20; /* Verde escuro para bordas iniciais */
+            
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Roboto Mono', monospace;
+        }
+
+        /* --- ESTILIZAÇÃO GERAL --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Fundo escuro com luzes de fundo verde neon bem suaves */
+            background-color: var(--bg-dark-green);
+            background-image: 
+                radial-gradient(at 15% 15%, rgba(0, 230, 118, 0.1) 0px, transparent 40%),
+                radial-gradient(at 85% 85%, rgba(0, 230, 118, 0.1) 0px, transparent 40%),
+                url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><g fill-rule="evenodd"><g fill="%231b5e20" fill-opacity="0.2"><path d="M0 40h40V0H0v40zm20-20h20V0H20v20zM0 20h20V0H0v20zm20 20h20V20H20v20zM0 40h20V20H0v20z"/></g></g></svg>');
+            
+            font-family: var(--font-body);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* --- TÍTULO DO FORMULÁRIO (H1) --- */
+        h1 {
+            font-family: var(--font-heading);
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            
+            /* Efeito de brilho neon escuro */
+            text-shadow: 
+                0 0 10px rgba(0, 230, 118, 0.4),
+                0 0 20px rgba(0, 230, 118, 0.2);
+                
+            animation: textGlowPulse 3s infinite alternate;
+        }
+
+        /* --- FORMULÁRIO COM EFEITO GLASSMORPHISM ESCURO --- */
+        form {
+            /* Fundo semi-transparente escuro com desfoque de fundo */
+            background-color: var(--form-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            
+            /* Borda fina verde escura */
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            
+            /* Sombra de caixa escurecida */
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                inset 0 0 15px rgba(0, 230, 118, 0.05);
+                
+            display: flex;
+            flex-direction: column;
+            animation: formFadeIn 1s ease-out;
+        }
+
+        /* --- PARÁGRAFOS E RÓTULOS (P, LABEL) --- */
+        p {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+        }
+
+        /* --- CAMPOS DE ENTRADA (INPUT) --- */
+        input {
+            background-color: rgba(0, 0, 0, 0.2); /* Leve fundo escurecido no campo */
+            padding: 15px;
+            
+            border: none;
+            border-bottom: 2px solid var(--border-green);
+            
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--text-light); /* Texto digitado ficará branco/verde clarinho */
+            outline: none;
+            transition: all 0.4s;
+            border-radius: 6px 6px 0 0; /* Curvatura apenas no topo */
+        }
+
+        input:focus {
+            /* Borda inferior neon no foco e fundo levemente mais claro */
+            background-color: rgba(0, 230, 118, 0.05);
+            border-bottom-color: var(--neon-green);
+            box-shadow: 0 4px 10px -4px rgba(0, 230, 118, 0.5);
+        }
+
+        /* --- BOTÃO DE CADASTRAR (BUTTON) --- */
+        button {
+            background-color: var(--border-green); /* Fundo inicial verde escuro */
+            color: var(--text-light);
+            
+            border: 1px solid var(--neon-green);
+            
+            padding: 15px 30px;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 20px;
+            
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.1);
+        }
+
+        button:hover {
+            /* No hover, o botão fica verde neon vibrante e o texto escuro (estilo Matrix) */
+            background-color: var(--neon-green);
+            color: var(--bg-dark-green);
+            
+            box-shadow: 
+                0 0 15px rgba(0, 230, 118, 0.6),
+                0 0 30px rgba(0, 230, 118, 0.3);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* --- ANIMAÇÕES --- */
+        @keyframes textGlowPulse {
+            from {
+                text-shadow: 
+                    0 0 10px rgba(0, 230, 118, 0.4),
+                    0 0 20px rgba(0, 230, 118, 0.2);
+            }
+            to {
+                text-shadow: 
+                    0 0 15px rgba(0, 230, 118, 0.8),
+                    0 0 25px rgba(0, 230, 118, 0.5),
+                    0 0 35px rgba(0, 230, 118, 0.3);
+            }
+        }
+
+        @keyframes formFadeIn {
+            from {
+                opacity: 0;
+                transform: translate3d(0, -30px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CADASTRAR CURSOS</h1>
+    <form action="/curso" method="post">
+        <p>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome">
+        </p>
+        <p>
+            <label for="carga_horaria">Carga Hóraria:</label>
+            <input type="number" id="carga_horaria" name="carga_horaria">
+        </p>
+        <p>
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" name="descricao">
+        </p>
+        <p>
+            <button type="submit">Cadastrar</button>
+        </p>
+    </form>
+
+</body>
+</html>
