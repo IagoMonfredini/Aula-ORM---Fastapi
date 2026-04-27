@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENAI - Lista de Cursos</title>
+    
+    <style>
+        /* --- ESTILOS BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --senai-red: #E3000F;
+            --senai-dark: #222;
+            --bg-gray: #f8f9fa;
+        }
+
+        /* AJUSTE PARA O FOOTER FICAR NO FINAL */
+        body {
+            background-color: var(--bg-gray);
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ocupa no mínimo a altura da tela toda */
+        }
+
+        /* --- CABEÇALHO --- */
+        header {
+            background-color: #ffffff;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            color: var(--senai-red);
+            font-size: 32px;
+            font-weight: 900;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        /* --- CONTAINER PRINCIPAL (Cresce para empurrar o footer) --- */
+        .main-container {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1; /* Faz esta seção ocupar todo o espaço disponível */
+        }
+
+        .header-lista {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--senai-dark);
+            text-transform: uppercase;
+        }
+
+        .btn-novo {
+            background-color: var(--senai-red);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(227, 0, 15, 0.2);
+        }
+
+        .btn-novo:hover {
+            background-color: #cc000d;
+            transform: translateY(-2px);
+        }
+
+        /* --- GRID DE CURSOS --- */
+        .cursos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            list-style: none;
+        }
+
+        .curso-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--senai-red);
+            transition: transform 0.3s;
+        }
+
+        .curso-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .curso-nome {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--senai-red);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .curso-info {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .curso-carga {
+            display: inline-block;
+            background: #eee;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--senai-dark);
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: var(--senai-dark);
+            color: #ddd;
+            text-align: center;
+            padding: 30px;
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .header-lista { flex-direction: column; gap: 20px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="/" class="logo">SENAI</a>
+        <nav>
+            <a href="/" style="text-decoration:none; color:#333; font-weight:600;">Início</a>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <div class="header-lista">
+            <h1>Cursos Disponíveis</h1>
+            <a href="/curso/cadastro" class="btn-novo">+ Novo Curso</a>
+        </div>
+
+        <ul class="cursos-grid">
+            {% for curso in cursos %}
+                <li class="curso-card">
+                    <span class="curso-nome">{{ curso.nome }}</span>
+                    <p class="curso-info">{{ curso.descricao }}</p>
+                    <span class="curso-carga">⏱ Carga Horária: {{ curso.carga_horaria }}h</span>
+                    <form action="/curso/{{ curso.id }}/deletar" method="post">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </li>
+            {% else %}
+                <p>Nenhum curso cadastrado no momento.</p>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Escola SENAI. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

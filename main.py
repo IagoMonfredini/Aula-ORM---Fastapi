@@ -17,14 +17,22 @@ templates = Jinja2Templates(directory="templates")
 
 # rota 
 # métodos http: GET,POST, PUT, DELETE
+@app.get("/")
+def home(
+    request: Request,
+    ):
+    return templates.TemplateResponse(
+        request,
+        "index.html",
+        {"request": request}
+    )
 
 @app.get("/curso/cadastro")
-def exibir_cadastro(request: Request):
+def exibir_cadastro(request:Request):
     return templates.TemplateResponse(
-
         request,
         "cadastrar_curso.html",
-        {"request": request}
+        {"request":request}
     )
     
 # rota para cadastrar um curso
@@ -42,4 +50,36 @@ def criar_curso(
     db.add(novo_curso)
     db.commit()
 
-    return RedirectResponse(url="/", status_code=303)
+    return RedirectResponse(url="/", status_code=303) 
+
+@app.get("/listar_curso")
+def listar_cursos(
+    request: Request,
+    db: Session = Depends(get_db)
+    ):
+
+    cursos = db.query(Curso).all()
+    return templates.TemplateResponse(
+        request,
+        "listar_cursos.html",
+        {"request": request, "cursos": cursos}
+    )
+
+@app.post("/cursos/{id}/deletar")
+def deletar_curso(
+    id: int,
+    db: Session = Depends(get_db)
+
+):
+    curso = db.query(Curso).get(id)
+
+    if curso:
+        db.delete(curso)
+        db.commit()
+
+    return RedirectResponse(url="/listar_curso", status_code=303)
+
+
+
+
+
